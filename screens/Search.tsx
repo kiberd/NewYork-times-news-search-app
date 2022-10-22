@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import {NewsResult} from 'data';
 import {BookmarkIcon as SolidBookmarkIcon} from 'react-native-heroicons/solid';
 import {BookmarkIcon as OutlineBookmarkIcon} from 'react-native-heroicons/outline';
-import FieldSet from 'react-native-fieldset';
 import moment from 'moment';
 
 import {
@@ -15,8 +14,7 @@ import {
   FlatList,
   Text,
   ActivityIndicator,
-  Platform,
-  Dimensions,
+  ScrollView
 } from 'react-native';
 
 import useSearchArticles from '../hooks/useSearchArticles';
@@ -26,10 +24,10 @@ import {SearchProps} from '../types';
 
 import {bookmarkListState, searchListState} from '../atoms/user';
 import {useRecoilState} from 'recoil';
-import {ScrollView} from 'react-native-gesture-handler';
+// import {ScrollView} from 'react-native-gesture-handler';
+import {serchItemStyles} from '../styles/styles';
 
 const Search = ({navigation}: SearchProps) => {
-  // const inputRef: any = useRef();
   const scrollRef: any = useRef();
   const [keyword, setKeyword] = useState<string>();
   const [articleList, setArticleList] = useState<NewsResult[]>([]);
@@ -86,7 +84,7 @@ const Search = ({navigation}: SearchProps) => {
 
   const handlePressKeyword = (e: any, text: string) => {
     setKeyword(text);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,16 +98,20 @@ const Search = ({navigation}: SearchProps) => {
         />
       </View>
 
-      <View style={{ marginLeft: 40, marginBottom: 5}}>
-        <Text style={{fontSize: 12, color: 'gray'}} onPress={() => setSearchList('')}>최근 검색어</Text>
-        
+      <View style={styles.latestKeywordInputContainer}>
+        <Text style={styles.latestKeywordInput}>최근 검색어</Text>
       </View>
 
-      <View style={{ height: "12%", maxHeight: 200, alignItems: 'center'}}>
-        <ScrollView style={styles.latestKeywordContainer}>
+      <View style={styles.latestKeywordContainer}>
+        <ScrollView style={styles.latestKeywordScrollView}>
           <View style={styles.latestKeywordGrid}>
             {searchList.map((text: string, index: number) => (
-              <Text key={text + index} style={styles.latestKeyword} onPress={(e) => handlePressKeyword(e, text)} >{text}</Text>
+              <Text
+                key={text + index}
+                style={styles.latestKeyword}
+                onPress={e => handlePressKeyword(e, text)}>
+                {text}
+              </Text>
             ))}
           </View>
         </ScrollView>
@@ -173,39 +175,6 @@ const Search = ({navigation}: SearchProps) => {
   );
 };
 
-const serchItemStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 20,
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
-    width: 330,
-  },
-  contents: {
-    width: '90%',
-    padding: 10,
-  },
-  headline: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 15,
-  },
-  date: {
-    fontSize: 10,
-    color: 'gray',
-  },
-  setting: {
-    width: '10%',
-    padding: 10,
-  },
-  bookmark: {
-    width: 10,
-    height: 10,
-    color: 'gray',
-  },
-});
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -228,15 +197,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
   },
+  latestKeywordInputContainer: {
+    marginLeft: 40,
+    marginBottom: 5,
+  },
+  latestKeywordInput: {
+    fontSize: 12,
+    color: 'gray',
+  },
   latestKeywordContainer: {
-    // flex: 1,
+    height: '12%',
+    maxHeight: 200,
+    alignItems: 'center',
+  },
+  latestKeywordScrollView: {
     width: '85%',
-    // height: 10000,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
-    // borderWidth: 1,
-    // borderColor: 'gray',
-    // borderRadius: 10,
   },
   latestKeywordGrid: {
     width: '100%',
@@ -254,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     color: 'white',
     overflow: 'hidden',
-    fontSize: 12
+    fontSize: 12,
   },
   contentsContainer: {
     width: '100%',

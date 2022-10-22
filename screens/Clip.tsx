@@ -15,8 +15,10 @@ import {
 
 import {bookmarkListState} from '../atoms/user';
 import {useRecoilState} from 'recoil';
+import {serchItemStyles} from '../styles/styles';
 
 const Clip = ({navigation}: ClipProps) => {
+
   const [bookmarkList, setBookmarkList] = useRecoilState(bookmarkListState);
 
   const handlePressBookmarkIcon = (e: any, item: NewsResult) => {
@@ -68,39 +70,6 @@ const Clip = ({navigation}: ClipProps) => {
   );
 };
 
-const serchItemStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 20,
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
-    width: 330,
-  },
-  contents: {
-    width: '90%',
-    padding: 10,
-  },
-  headline: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 15,
-  },
-  date: {
-    fontSize: 10,
-    color: 'gray',
-  },
-  setting: {
-    width: '10%',
-    padding: 10,
-  },
-  bookmark: {
-    width: 10,
-    height: 10,
-    color: 'gray',
-  },
-});
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -148,7 +117,6 @@ const styles = StyleSheet.create({
   },
   contentsContainer: {
     width: '100%',
-    // height: '100%',
     flex: 1,
     display: 'flex',
     alignItems: 'center',
