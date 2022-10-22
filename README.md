@@ -1,6 +1,4 @@
-# 숨고 과제
-
-### 실행방법 
+# Instruction
 
 - 의존성 패키지를 설치하기 전에 다음과 같은 설치 절차가 필요합니다. 
 1. 맥 에뮬레이터를 실행하기 위한 xcode: https://apps.apple.com/us/app/xcode/id497799835?mt=12
